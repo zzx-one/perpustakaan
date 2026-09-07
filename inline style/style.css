@@ -1,0 +1,301 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #f5f5f3;
+  color: #1a1a1a;
+  padding: 1.5rem;
+  min-height: 100vh;
+}
+
+@media (prefers-color-scheme: dark) {
+  body                    { background: #1a1a1a; color: #f0f0ee; }
+  .card                   { background: #242424; border-color: rgba(255,255,255,0.1); }
+  .bar-track,
+  .core-track             { background: #333; }
+  .disk-row               { border-color: rgba(255,255,255,0.08); }
+  .ctrl-btn               { border-color: rgba(255,255,255,0.2); color: #aaa; }
+  .ctrl-btn.active        { background: #333; color: #f0f0ee; }
+  .big-num,
+  .disk-val,
+  .core-val               { color: #f0f0ee; }
+  .card-title,
+  .sub,
+  .core-lbl,
+  .disk-name,
+  .legend span            { color: #aaa; }
+  #status-bar             { background: #2a2a2a; border-color: rgba(255,255,255,0.08); }
+}
+
+/* ── Typography ─────────────────────────────────────── */
+h1 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Status bar ──────────────────────────────────────── */
+#status-bar {
+  font-size: 12px;
+  color: #888;
+  background: #f0f0ee;
+  border: 0.5px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 7px 14px;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#status-bar-right {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#ws-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #888;
+  display: inline-block;
+  flex-shrink: 0;
+}
+#ws-dot.ws-ok  { background: #3B6D11; }
+#ws-dot.ws-err { background: #A32D2D; }
+
+#ws-url {
+  font-size: 12px;
+  padding: 5px 10px;
+  border: 0.5px solid rgba(0,0,0,0.2);
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  width: 240px;
+}
+
+/* ── Layout ──────────────────────────────────────────── */
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Card ────────────────────────────────────────────── */
+.card {
+  background: #fff;
+  border: 0.5px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.big-num {
+  font-size: 36px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.sub {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* ── Controls ────────────────────────────────────────── */
+.ctrl-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ctrl-label {
+  font-size: 12px;
+  color: #888;
+}
+
+.ctrl-btn {
+  font-size: 12px;
+  padding: 5px 12px;
+  border: 0.5px solid rgba(0,0,0,0.2);
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  color: #666;
+  transition: all 0.15s;
+}
+.ctrl-btn:hover         { background: #f0f0ee; }
+.ctrl-btn.active        { background: #f0f0ee; color: #1a1a1a; font-weight: 500; }
+
+/* ── Progress bars ───────────────────────────────────── */
+.bar-track {
+  background: #f0f0ee;
+  border-radius: 4px;
+  height: 6px;
+  margin: 6px 0 14px;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: #185FA5;
+  transition: width 0.5s ease;
+}
+
+/* ── CPU cores ───────────────────────────────────────── */
+.core-section-label {
+  margin: 1rem 0 0.5rem;
+  font-size: 11px;
+  color: #888;
+}
+
+.core-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: #888;
+}
+.core-lbl   { min-width: 48px; }
+.core-track {
+  flex: 1;
+  background: #f0f0ee;
+  border-radius: 3px;
+  height: 5px;
+  overflow: hidden;
+}
+.core-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: #185FA5;
+  transition: width 0.5s ease;
+}
+.core-val {
+  min-width: 32px;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* ── Disk rows ───────────────────────────────────────── */
+.disk-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 0.5px solid rgba(0,0,0,0.07);
+  font-size: 13px;
+}
+.disk-row:last-child { border-bottom: none; }
+.disk-name {
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.disk-val { font-weight: 500; }
+
+/* ── Status dots ─────────────────────────────────────── */
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.dot-ok     { background: #3B6D11; }
+.dot-warn   { background: #BA7517; }
+.dot-danger { background: #A32D2D; }
+
+/* ── Disk usage label row ────────────────────────────── */
+.disk-usage-foot {
+  font-size: 11px;
+  color: #888;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ── Legend ──────────────────────────────────────────── */
+.legend {
+  display: flex;
+  gap: 14px;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.legend-dot--round { border-radius: 50%; }
+
+/* ── Chart wrapper ───────────────────────────────────── */
+.gauge-wrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+}
+
+/* ── Chart section header ────────────────────────────── */
+.chart-section {
+  margin-top: 1rem;
+}
+
+/* ── CPU stat row ────────────────────────────────────── */
+.cpu-stat-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.cpu-unit {
+  font-size: 16px;
+  color: #888;
+}
+
+/* ── Disk IO row ─────────────────────────────────────── */
+.disk-io-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.disk-io-unit {
+  font-size: 13px;
+  color: #888;
+  margin-left: 2px;
+}
+
+/* ── Storage section ─────────────────────────────────── */
+.storage-section { margin-top: 1rem; }
+.storage-label {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 6px;
+}
